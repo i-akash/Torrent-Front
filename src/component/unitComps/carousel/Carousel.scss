@@ -8,7 +8,7 @@
     width: 930px;
     left: 0;
     right: 0;
-    top: 0;
+    top: 5rem;
     bottom: 0;
 }
 
@@ -35,12 +35,17 @@
     transition: height 1s, width 1s, left 1s, margin-top 1s, line-height 1s, background-color 1s;
 }
 
-$level2-height: 280px;
-$level2-width: 180px;
-$level1-height: 300px;
-$level1-width: 200px;
-$level0-height: 320px;
-$level0-width: 220px;
+.citem:hover{
+    cursor: pointer;
+    box-shadow: .01rem .01rem .3rem .01rem black;
+}
+
+$level2-height: 230px;
+$level2-width: 130px;
+$level1-height: 250px;
+$level1-width: 150px;
+$level0-height: 270px;
+$level0-width: 170px;
 
 $level-2-left: 900px;
 $level-1-left: 692px;
@@ -53,7 +58,7 @@ $level2-left: 50px;
     height: $level2-height;
     width: $level2-width;
     line-height: $level2-height;
-    background-color:   rgb(218, 214, 214);
+    background-color:   black;
     left: $level-2-left;
     margin-top: 15px;
     border-radius: 3%;
@@ -63,7 +68,7 @@ $level2-left: 50px;
     height: $level1-height;
     width: $level1-width;
     line-height: $level1-height;
-    background-color:  rgb(218, 214, 214);
+    background-color:  black;
     left: $level-1-left;
     margin-top: 10px;
     border-radius: 3%;
@@ -73,7 +78,7 @@ $level2-left: 50px;
     height: $level0-height;
     width: $level0-width;
     line-height: $level0-height;
-    background-color:  rgb(218, 214, 214);
+    background-color:  black;
     left: $level0-left;
     border-radius: 3%;
 }
@@ -82,7 +87,7 @@ $level2-left: 50px;
     height: $level1-height;
     width: $level1-width;
     line-height: $level1-height;
-    background-color:  rgb(218, 214, 214);
+    background-color:  black;
     margin-top: 10px;
     left: $level1-left;
     border-radius: 3%;
@@ -92,7 +97,7 @@ $level2-left: 50px;
     height: $level2-height;
     width: $level2-width;
     line-height: $level2-height;
-    background-color:  rgb(218, 214, 214);
+    background-color:  black;
     margin-top: 15px;
     left: $level2-left;
     border-radius: 3%;

@@ -10,12 +10,12 @@ export default class Item extends React.Component {
     }
     
     render() {
-        const className = 'citem level' + this.props.level
+        const {onClick,level,title,src}=this.props;
+        const className = 'citem level' +level
         return(
-            <div class={className}>
-                <div class="image" style={{width:"100%",height:"100%"}}>
-                    <img src={this.props.src} style={{width:"100%",height:"100%",borderRadius:"3%"}}/>
-                </div>
+            <div className={className} onClick={onClick}>
+                    <img src={src} style={{width:"100%",height:"78%",borderTopLeftRadius:"3%",borderTopRightRadius:"3%"}} alt={title} class="ui image"/>
+                    <h4 style={{color:"gray",position:"absolute",zIndex:"100000",bottom:"2px",textAlign:"center",overflow:"hidden"}}>{title}</h4>
             </div>
         )
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../css/Home.css'
 import Carousel from '../../unitComps/carousel/Carousel'
+import api from '../../api/Api'
 
 export default class Home extends Component {
     state={
@@ -13,14 +14,26 @@ export default class Home extends Component {
                       "https://images6.alphacoders.com/553/553030.jpg",
                        "https://images3.alphacoders.com/647/647230.jpg",
                         "https://images5.alphacoders.com/647/647388.jpg",
-                         "https://wallpapercave.com/wp/wp1776719.jpg"]
+                         "https://wallpapercave.com/wp/wp1776719.jpg"],
+        trendingTorrents:[],
+        recentTorrents:[]
     }
 
+    componentWillMount=()=>{
+        api.getMinimalTrendingTorrents(1,15).then(trending=>this.setState({trendingTorrents:trending}));
+        api.getRecentTorrents(1,20).then(recent=>this.setState({recentTorrents:recent}));
+    }
+
+
+
     render() {
+        const {trendingTorrents}=this.state;
         return (
             <div className="home-container">
                 <div className="trendingsection">
-                    <Carousel items={this.state.items} active={1}/>
+                    <Carousel items={trendingTorrents} active={1}/>
+                </div>
+                <div className="torrents">
                 </div>         
             </div>
         )

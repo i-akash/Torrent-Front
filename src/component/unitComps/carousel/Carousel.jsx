@@ -5,17 +5,13 @@ import './Carousel.scss'
 
 export default class Carousel extends Component {
     
-    constructor(props) {
-        super(props)
-        this.state = {
-            items: this.props.items,
-            active: this.props.active,
+       state = {
+            active: 1,
             direction: '',
             lastTime:0
         }
-        this.rightClick = this.moveRight.bind(this)
-        this.leftClick = this.moveLeft.bind(this)
-    }
+    
+
 
     componentWillMount=()=>{
         this.timer=setInterval(()=>this.moveRight(),2000);
@@ -25,53 +21,60 @@ export default class Carousel extends Component {
         clearInterval(this.timer);
     }
 
-    generateItems() {
-        var items = []
-        var level
-        console.log(this.state.active)
-        for (var i = this.state.active - 2; i <= this.state.active +2; i++) {
-            var index = i
+    generateItems=()=> {
+        const {active}=this.state
+        const {items}=this.props
+        let carouselItems = []
+        let level
+       
+
+        for (var i = active - 2; i <= active +2; i++) {
+            let index = i
+            let length=items.length;
+
             if (i < 0) {
-                index = this.state.items.length + i
-            } else if (i >= this.state.items.length) {
-                index = i % this.state.items.length
+                index = length + i
+            } else if (i >= length) {
+                index = i % length
             }
-            level = this.state.active - i
-            items.push(<Item key={index} id={index} src={this.state.items[index]} level={level} />)
+
+            level = active - i
+            if(length)
+                carouselItems.push(<Item key={index} id={items[index].id} src={items[index].poster} level={level} title={items[index].title} onClick={()=>{console.log(items[index].id)}}/>)
         }
-        console.log(items);
         
-        return items
+        return carouselItems
     }
     
-    moveLeft() {
+    moveLeft=()=> {
+        const {items}=this.props
+        const {active,lastTime}=this.state
 
         let now=new Date().getTime();
-        let {lastTime}=this.state;
         if(now-lastTime<1000)return;
 
-        lastTime=now;
 
-        var newActive = this.state.active
+        var newActive = active
         newActive--
         this.setState({
-            active: newActive < 0 ? this.state.items.length - 1 : newActive,
+            active: newActive < 0 ? items.length - 1 : newActive,
             direction: 'left',
-            lastTime
+            lastTime:now
         })
     }
     
-    moveRight() {
+    moveRight=()=> {
+        const {items}=this.props
+        const {active,lastTime}=this.state
+
         let now=new Date().getTime();
-        let {lastTime}=this.state;
         if(now-lastTime<1000)return;
 
-        lastTime=now;
-        var newActive = this.state.active
+        var newActive = active
         this.setState({
-            active: (newActive + 1) % this.state.items.length,
+            active: (newActive + 1) % items.length,
             direction: 'right',
-            lastTime
+            lastTime:now
         })
     }
     
@@ -79,12 +82,15 @@ export default class Carousel extends Component {
         return(
             <div id="carousel" className="noselect">
                 
-                <div className="arrow arrow-left" onClick={this.leftClick}><i aria-hidden="true" class="arrow left icon"></i></div>
+                <div className="arrow arrow-left" onClick={this.moveLeft}><i aria-hidden="true" className="arrow left icon"></i></div>
                 <ReactCSSTransitionGroup 
-                    transitionName={this.state.direction}>
+                    transitionName={this.state.direction}
+                    transitionEnterTimeout={2000}
+                    transitionLeaveTimeout={2000}
+                    >
                     {this.generateItems()}
                 </ReactCSSTransitionGroup>
-                <div className="arrow arrow-right" onClick={this.rightClick}><i aria-hidden="true" class="arrow right icon"></i></div>
+                <div className="arrow arrow-right" onClick={this.moveRight}><i aria-hidden="true" className="arrow right icon"></i></div>
             </div>
         )
     }
