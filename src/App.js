@@ -1,13 +1,16 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Home from './component/pages/jsx/Home';
 import Navbar from './component/navigation/Navbar';
+import Route from './component/navigation/Route'
 function App() {
   return (
     <div className="App">
       <Navbar/>
-      <Home/>
+      <Route/>
+      <div style={{height:"10rem"}}>
+          
+      </div>
     </div>
   );
 }

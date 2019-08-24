@@ -40,10 +40,14 @@ export default class Carousel extends Component {
 
             level = active - i
             if(length)
-                carouselItems.push(<Item key={index} id={items[index].id} src={items[index].poster} level={level} title={items[index].title} onClick={()=>{console.log(items[index].id)}}/>)
+                carouselItems.push(<Item key={index} id={items[index].id} src={items[index].poster} level={level} title={items[index].title} onClick={()=>this.onClickDetails(items[index].id)}/>)
         }
         
         return carouselItems
+    }
+
+    onClickDetails=(id)=>{
+        this.props.history.push(`/details/${id}`)
     }
     
     moveLeft=()=> {
@@ -85,8 +89,8 @@ export default class Carousel extends Component {
                 <div className="arrow arrow-left" onClick={this.moveLeft}><i aria-hidden="true" className="arrow left icon"></i></div>
                 <ReactCSSTransitionGroup 
                     transitionName={this.state.direction}
-                    transitionEnterTimeout={2000}
-                    transitionLeaveTimeout={2000}
+                    transitionEnterTimeout={1000}
+                    transitionLeaveTimeout={1000}
                     >
                     {this.generateItems()}
                 </ReactCSSTransitionGroup>

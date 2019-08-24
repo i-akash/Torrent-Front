@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import '../css/Home.css'
 import Carousel from '../../unitComps/carousel/Carousel'
 import api from '../../api/Api'
+import Table from '../../unitComps/list/Table'
+import TorrentListing from '../../unitComps/common/TorrentListing'
 
 export default class Home extends Component {
     state={
@@ -16,7 +18,8 @@ export default class Home extends Component {
                         "https://images5.alphacoders.com/647/647388.jpg",
                          "https://wallpapercave.com/wp/wp1776719.jpg"],
         trendingTorrents:[],
-        recentTorrents:[]
+        recentTorrents:[],
+        morePage:true,
     }
 
     componentWillMount=()=>{
@@ -24,17 +27,30 @@ export default class Home extends Component {
         api.getRecentTorrents(1,20).then(recent=>this.setState({recentTorrents:recent}));
     }
 
+    
+    
 
+    getPage=(page)=>{
+            api.getRecentTorrents(page,20).then(recent=>{
+                if(recent.length)
+                    this.setState({recentTorrents:recent,morePage:true})
+                else
+                    this.setState({morePage:false})    
+            });
+    }
 
     render() {
-        const {trendingTorrents}=this.state;
+        const {trendingTorrents,recentTorrents,morePage}=this.state;
         return (
             <div className="home-container">
                 <div className="trendingsection">
-                    <Carousel items={trendingTorrents} active={1}/>
+                    <Carousel items={trendingTorrents} active={1} history={this.props.history}/>
                 </div>
-                <div className="torrents">
-                </div>         
+                
+                <div className="fresh-torrents">
+                    <TorrentListing torrents={recentTorrents} category={"new Torrents"} getPage={this.getPage} morePage={morePage} history={this.props.history}/>
+                </div>
+                        
             </div>
         )
     }
